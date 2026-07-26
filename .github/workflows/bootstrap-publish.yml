@@ -1,0 +1,52 @@
+name: Bootstrap first npm release
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_package:
+        description: Type @airouter-dev/openai-compatible-errors@0.1.0
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-bootstrap-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish the brand-new package once
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: npm-bootstrap
+    steps:
+      - name: Confirm the immutable target
+        env:
+          CONFIRM_PACKAGE: ${{ inputs.confirm_package }}
+        run: test "$CONFIRM_PACKAGE" = "@airouter-dev/openai-compatible-errors@0.1.0"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+          cache: npm
+      - name: Use an npm CLI with provenance support
+        run: npm install --global npm@11
+      - run: npm ci --ignore-scripts
+      - run: npm run validate
+      - run: npm audit --audit-level=high
+      - name: Refuse to overwrite an existing version
+        run: |
+          if npm view @airouter-dev/openai-compatible-errors@0.1.0 version >/dev/null 2>&1; then
+            echo "Version 0.1.0 already exists; bootstrap is single-use."
+            exit 1
+          fi
+      - name: Publish 0.1.0 with provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_BOOTSTRAP_TOKEN }}
+        run: |
+          test -n "$NODE_AUTH_TOKEN"
+          npm publish --access public --provenance
