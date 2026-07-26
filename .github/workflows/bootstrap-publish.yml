@@ -42,7 +42,12 @@ jobs:
           test -n "$NODE_AUTH_TOKEN"
           publisher="$(npm whoami --registry=https://registry.npmjs.org/)"
           test -n "$publisher"
-          echo "npm token authentication succeeded; the registry will enforce @ai-router publish access."
+          echo "Authenticated npm username: $publisher"
+          if [ "$publisher" != "ai-router" ]; then
+            echo "::error::The authenticated npm username is not ai-router, so it cannot own the @ai-router user scope."
+            exit 1
+          fi
+          echo "npm token authentication and @ai-router user-scope ownership match."
       - run: npm ci --ignore-scripts
       - run: npm run validate
       - run: npm audit --audit-level=high
