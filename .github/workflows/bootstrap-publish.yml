@@ -35,6 +35,22 @@ jobs:
           cache: npm
       - name: Use an npm CLI with provenance support
         run: npm install --global npm@11
+      - name: Verify token identity can access the package scope
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_BOOTSTRAP_TOKEN }}
+        run: |
+          test -n "$NODE_AUTH_TOKEN"
+          publisher="$(npm whoami --registry=https://registry.npmjs.org/)"
+          if [ "$publisher" = "airouter-dev" ]; then
+            echo "Token identity owns the @airouter-dev user scope."
+            exit 0
+          fi
+          if npm access list packages @airouter-dev --json --registry=https://registry.npmjs.org/ >/dev/null; then
+            echo "Token identity can access the @airouter-dev organization package scope."
+            exit 0
+          fi
+          echo "::error::Token identity neither owns the airouter-dev user scope nor has access to the @airouter-dev organization package scope."
+          exit 1
       - run: npm ci --ignore-scripts
       - run: npm run validate
       - run: npm audit --audit-level=high
