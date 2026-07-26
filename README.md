@@ -1,5 +1,7 @@
 # @airouter-dev/openai-compatible-errors
 
+[![CI](https://github.com/airouter-dev/openai-compatible-errors/actions/workflows/ci.yml/badge.svg)](https://github.com/airouter-dev/openai-compatible-errors/actions/workflows/ci.yml)
+
 Typed, safe-by-default error normalization and stream-aware retry decisions for OpenAI-compatible APIs.
 
 This is not an API client. It does not send requests, log data, sleep, or retry automatically. It turns HTTP, SDK-style, Fetch, and SSE failures into a small error object, then helps the caller decide whether replay is safe.
