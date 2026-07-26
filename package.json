@@ -72,11 +72,11 @@
     "prepack": "npm run validate"
   },
   "devDependencies": {
-    "@types/node": "^20.19.0",
+    "@types/node": "^26.1.1",
     "@vitest/coverage-v8": "^4.1.10",
     "openai": "6.49.0",
     "tsup": "^8.5.0",
-    "typescript": "^5.7.0",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.10"
   },
   "overrides": {
