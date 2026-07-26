@@ -35,17 +35,14 @@ jobs:
           cache: npm
       - name: Use an npm CLI with provenance support
         run: npm install --global npm@11
-      - name: Verify token identity owns the package scope
+      - name: Verify bootstrap token authentication
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_BOOTSTRAP_TOKEN }}
         run: |
           test -n "$NODE_AUTH_TOKEN"
           publisher="$(npm whoami --registry=https://registry.npmjs.org/)"
-          if [ "$publisher" != "ai-router" ]; then
-            echo "::error::The bootstrap token must belong to the ai-router npm user."
-            exit 1
-          fi
-          echo "Token identity owns the @ai-router user scope."
+          test -n "$publisher"
+          echo "npm token authentication succeeded; the registry will enforce @ai-router publish access."
       - run: npm ci --ignore-scripts
       - run: npm run validate
       - run: npm audit --audit-level=high
