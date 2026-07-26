@@ -1,4 +1,4 @@
-# @airouter-dev/openai-compatible-errors
+# @ai-router/openai-compatible-errors
 
 [![CI](https://github.com/airouter-dev/openai-compatible-errors/actions/workflows/ci.yml/badge.svg)](https://github.com/airouter-dev/openai-compatible-errors/actions/workflows/ci.yml)
 
@@ -9,7 +9,7 @@ This is not an API client. It does not send requests, log data, sleep, or retry 
 ## Install
 
 ```bash
-npm install @airouter-dev/openai-compatible-errors
+npm install @ai-router/openai-compatible-errors
 ```
 
 Node.js 18.18 or newer is required. Both ESM and CommonJS entry points include TypeScript declarations.
@@ -20,7 +20,7 @@ Node.js 18.18 or newer is required. Both ESM and CommonJS entry points include T
 import {
   decideOpenAICompatibleRetry,
   normalizeOpenAICompatibleResponse,
-} from "@airouter-dev/openai-compatible-errors";
+} from "@ai-router/openai-compatible-errors";
 
 const startedAt = Date.now();
 const response = await fetch(`${baseURL}/v1/chat/completions`, requestInit);
@@ -159,7 +159,7 @@ An idempotency key alone does not prove safe replay. The caller owns `replaySafe
 `OpenAICompatibleSSEInspector` accepts arbitrary string or `Uint8Array` chunks. It tracks output without retaining event payloads.
 
 ```ts
-import { OpenAICompatibleSSEInspector } from "@airouter-dev/openai-compatible-errors";
+import { OpenAICompatibleSSEInspector } from "@ai-router/openai-compatible-errors";
 
 const inspector = new OpenAICompatibleSSEInspector();
 
@@ -194,7 +194,7 @@ Use `normalizeOpenAICompatibleSSEEvent()` instead when another parser already ha
 `sanitizeForLogs(value)` creates a bounded, JSON-serializable projection. Ordinary user-defined accessors are represented as `[Getter]` rather than invoked.
 
 ```ts
-import { sanitizeForLogs } from "@airouter-dev/openai-compatible-errors";
+import { sanitizeForLogs } from "@ai-router/openai-compatible-errors";
 
 logger.warn(sanitizeForLogs({
   headers,

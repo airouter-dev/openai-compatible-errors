@@ -1,7 +1,7 @@
 import {
   decideOpenAICompatibleRetry,
   normalizeOpenAICompatibleResponse,
-} from "@airouter-dev/openai-compatible-errors";
+} from "@ai-router/openai-compatible-errors";
 
 const baseURL = process.env.OPENAI_BASE_URL;
 const apiKey = process.env.OPENAI_API_KEY;

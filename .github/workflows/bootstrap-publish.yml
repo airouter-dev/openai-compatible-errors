@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       confirm_package:
-        description: Type @airouter-dev/openai-compatible-errors@0.1.0
+        description: Type @ai-router/openai-compatible-errors@0.1.0
         required: true
         type: string
 
@@ -26,7 +26,7 @@ jobs:
       - name: Confirm the immutable target
         env:
           CONFIRM_PACKAGE: ${{ inputs.confirm_package }}
-        run: test "$CONFIRM_PACKAGE" = "@airouter-dev/openai-compatible-errors@0.1.0"
+        run: test "$CONFIRM_PACKAGE" = "@ai-router/openai-compatible-errors@0.1.0"
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
@@ -35,28 +35,23 @@ jobs:
           cache: npm
       - name: Use an npm CLI with provenance support
         run: npm install --global npm@11
-      - name: Verify token identity can access the package scope
+      - name: Verify token identity owns the package scope
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_BOOTSTRAP_TOKEN }}
         run: |
           test -n "$NODE_AUTH_TOKEN"
           publisher="$(npm whoami --registry=https://registry.npmjs.org/)"
-          if [ "$publisher" = "airouter-dev" ]; then
-            echo "Token identity owns the @airouter-dev user scope."
-            exit 0
+          if [ "$publisher" != "ai-router" ]; then
+            echo "::error::The bootstrap token must belong to the ai-router npm user."
+            exit 1
           fi
-          if npm access list packages @airouter-dev --json --registry=https://registry.npmjs.org/ >/dev/null; then
-            echo "Token identity can access the @airouter-dev organization package scope."
-            exit 0
-          fi
-          echo "::error::Token identity neither owns the airouter-dev user scope nor has access to the @airouter-dev organization package scope."
-          exit 1
+          echo "Token identity owns the @ai-router user scope."
       - run: npm ci --ignore-scripts
       - run: npm run validate
       - run: npm audit --audit-level=high
       - name: Refuse to overwrite an existing version
         run: |
-          if npm view @airouter-dev/openai-compatible-errors@0.1.0 version >/dev/null 2>&1; then
+          if npm view @ai-router/openai-compatible-errors@0.1.0 version >/dev/null 2>&1; then
             echo "Version 0.1.0 already exists; bootstrap is single-use."
             exit 1
           fi

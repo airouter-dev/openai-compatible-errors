@@ -5,9 +5,9 @@ The package uses token-free npm Trusted Publishing for routine releases. npm can
 ## Bootstrap `0.1.0`
 
 1. Verify the public repository, CI, package metadata, tarball contents, and `npm publish --dry-run` output.
-2. In npm account settings, create a new granular token with the shortest available expiration, package/scope read-write access limited to `@airouter-dev`, and bypass 2FA enabled. Do not send or paste the token into an issue, commit, chat, shell history, or local `.npmrc`.
+2. After the npm username is `ai-router`, create a new granular token with the shortest available expiration, package/scope read-write access limited to `@ai-router`, and bypass 2FA enabled. Do not send or paste the token into an issue, commit, chat, shell history, or local `.npmrc`.
 3. In GitHub, create the `npm-bootstrap` environment, require a reviewer, and add the token as the environment secret `NPM_BOOTSTRAP_TOKEN`.
-4. Manually run **Bootstrap first npm release** and type `@airouter-dev/openai-compatible-errors@0.1.0` into its confirmation field. The workflow refuses to run if that version already exists, runs validation and audit, and publishes with provenance.
+4. Manually run **Bootstrap first npm release** and type `@ai-router/openai-compatible-errors@0.1.0` into its confirmation field. The workflow refuses to run if that version already exists, runs validation and audit, and publishes with provenance.
 5. Install the public package into a new empty project and exercise both ESM and CommonJS entry points.
 6. Delete the GitHub environment secret and revoke the npm bootstrap token immediately.
 
