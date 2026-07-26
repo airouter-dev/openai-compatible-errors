@@ -1,0 +1,85 @@
+{
+  "name": "@airouter-dev/openai-compatible-errors",
+  "version": "0.1.0",
+  "description": "Normalize OpenAI-compatible API errors into typed categories, retry plans, request IDs, and redacted diagnostics",
+  "keywords": [
+    "openai-compatible",
+    "openai",
+    "openai-api",
+    "llm",
+    "ai-gateway",
+    "api-errors",
+    "error-normalization",
+    "error-handling",
+    "retry",
+    "retry-after",
+    "rate-limit",
+    "request-id",
+    "sse",
+    "streaming",
+    "typescript",
+    "fetch",
+    "redaction",
+    "safe-logging"
+  ],
+  "license": "MIT",
+  "author": "airouter.dev contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/airouter-dev/openai-compatible-errors.git"
+  },
+  "homepage": "https://github.com/airouter-dev/openai-compatible-errors#readme",
+  "bugs": {
+    "url": "https://github.com/airouter-dev/openai-compatible-errors/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap",
+    "coverage": "vitest run --coverage",
+    "smoke": "node scripts/runtime-smoke.cjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "validate": "npm run typecheck && npm run coverage && npm run build",
+    "prepack": "npm run validate"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "@vitest/coverage-v8": "^4.1.10",
+    "openai": "6.49.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "esbuild": "0.27.2"
+  }
+}
