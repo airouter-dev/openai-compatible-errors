@@ -44,6 +44,8 @@ if (apiError) {
 }
 ```
 
+To exercise both branches without an API key, run the repository's [loopback rate-limit example](./examples/loopback-rate-limit.mjs). It compares a side-effect-free fixture explicitly marked safe to replay with the same 429 under unknown replay safety.
+
 For a 429 response with a two-second `Retry-After`, the normalized error is safe to serialize:
 
 ```json
