@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 - 2026-07-26
+## 0.1.0 - 2026-07-28
 
 - Normalize native Fetch, OpenAI SDK-style, AI SDK-style, HTTP, and SSE errors.
 - Read the current OpenAI Node SDK `requestID` field and verify `APIError`, connection, timeout, and abort objects against pinned `openai@6.49.0`.

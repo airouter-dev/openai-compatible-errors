@@ -1,6 +1,6 @@
 # Security Policy
 
-The package is not public yet, so there is no supported release at this time. After `0.1.0` is published, security fixes will target the latest `0.1.x` release until a newer minor line replaces it.
+The current `0.1.x` line is supported. Security fixes target the latest published patch release until a newer minor line replaces it.
 
 ## Reporting a vulnerability
 
